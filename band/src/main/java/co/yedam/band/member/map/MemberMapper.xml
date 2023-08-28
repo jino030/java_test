@@ -3,11 +3,11 @@
 <mapper namespace="co.yedam.band.member.map.MemberMapper">
 	<select id="memberSelect" resultType="co.yedam.band.member.service.MemberVO">
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
-		<if test="memberPassword != null">member_password = #{memberPassword}</if>
+		<if test="memberPassword != null">AND MEMBER_PASSWORD = #{memberPassword}</if>
 	</select>
 	
 	<insert id="memberInsert" parameterType="co.yedam.band.member.service.MemberVO">
-		INSERT INTO MEMEBER (MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_EMAIL, MEMBER_BIRTH)
+		INSERT INTO MEMBER (MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_EMAIL, MEMBER_BIRTH)
 		VALUES (#{memberId}, #{memberPassword}, #{memberName}, #{memberEmail}, #{memberBirth})
 	</insert>
 	

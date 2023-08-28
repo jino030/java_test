@@ -10,8 +10,7 @@ public class MemberMenu {
 	Scanner scn = new Scanner(System.in);
 	MemberService dao = new MemberServiceImple();
 	
-	// MainView 에서 로그인에 성공하면 실행
 	public void run() {
-		
+		System.out.println("이곳은 회원만 들어올 수 있는 뷰 입니다.");
 	}
 }

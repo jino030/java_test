@@ -8,7 +8,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        MainView main = new MainView();
+        MenuManager main = new MenuManager();
         
         main.run();
     }
