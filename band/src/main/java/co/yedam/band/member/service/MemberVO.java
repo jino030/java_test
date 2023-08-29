@@ -14,4 +14,5 @@ public class MemberVO {
 	private LocalDate enterDate;
 	private LocalDate deleteDate;
 	private String usetYn;
+	private String memberMessage;
 }

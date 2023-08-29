@@ -1,8 +1,8 @@
 package co.yedam.band;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import co.yedam.band.common.SHA256;
@@ -41,34 +41,39 @@ public class MenuManager {
 
 		while (b) {
 			title();
-			int key = scn.nextInt();
-			scn.nextLine();
+			int key = -1;
+			try {
+				key = scn.nextInt();
+			} catch(InputMismatchException e) {
+				// 숫자외의 값이 들어오면 switch 구문의 default로!
+			} finally {
+				scn.nextLine();
+			}
 
 			switch (key) {
 			case 1: // 로그인
-				if (login()) {
-					mm.run(); // 회원만 메인메뉴 접속가능
+				MemberVO vo = login();
+				if (vo != null) {
+					mm.run(vo); // 회원만 메인메뉴 접속가능
 					b = false;
 				}
 				break;
-
 			case 2: // 회원가입
 				join();
 				break;
-
 			case 3:
 				System.out.println(" ## 프로그램을 종료합니다!");
 				b = false;
 				scn.close();
 				break;
 			default:
-				System.out.println(" ## 잘못 선택하셨습니다.");
+				System.out.println(" ## 잘못 선택하셨습니다. 서비스 번호는 숫자만 입력 가능합니다.");
 				break;
 			}
 		}
 	}// end of run();
 
-	private boolean login() {
+	private MemberVO login() {
 		MemberVO vo = new MemberVO();
 
 		System.out.print(" ## 아이디 입력 >> ");
@@ -82,19 +87,19 @@ public class MenuManager {
 		if (vo != null) {
 			System.out.println("");
 			System.out.println(" ## " + vo.getMemberName() + "님 환영합니다~♬");
-			return true;
+			return vo;
 		} else {
 			System.out.println("");
 			System.out.println(" ## 아이디 또는 패스워드가 틀렸습니다.");
 			System.out.println(" ## 다시 시도하거나, 회원가입 후 이용해주시기 바랍니다!");
 		}
 
-		return false;
-	}
+		return null;
+	}// end of login()
 
 	private void join() {
 		MemberVO vo = new MemberVO();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 		System.out.print(" ## 아이디 입력 >> ");
 		vo.setMemberId(scn.nextLine());
@@ -102,7 +107,7 @@ public class MenuManager {
 		vo.setMemberPassword(sha256.encrypt(scn.nextLine())); // 암호화
 		System.out.print(" ## 이름 입력 >> ");
 		vo.setMemberName(scn.nextLine());
-		System.out.print(" ## 생일(ex.230101) 입력 >> ");
+		System.out.print(" ## 생일(ex.19990101) 입력 >> ");
 		LocalDate birth = LocalDate.parse(scn.nextLine(), formatter);
 		vo.setMemberBirth(birth);
 		System.out.print(" ## 이메일 입력 >> ");
@@ -117,5 +122,5 @@ public class MenuManager {
 			System.out.println("");
 			System.out.println(" ## 회원가입 실패! 다시 시도해주세요.");
 		}
-	}
+	}// end of join()
 }

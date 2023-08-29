@@ -7,17 +7,18 @@
 	</select>
 	
 	<insert id="memberInsert" parameterType="co.yedam.band.member.service.MemberVO">
-		INSERT INTO MEMBER (MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_EMAIL, MEMBER_BIRTH)
-		VALUES (#{memberId}, #{memberPassword}, #{memberName}, #{memberEmail}, #{memberBirth})
+		INSERT INTO MEMBER (MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_EMAIL, MEMBER_BIRTH, MEMBER_MESSAGE)
+		VALUES (#{memberId}, #{memberPassword}, #{memberName}, #{memberEmail}, #{memberBirth}, #{memberMessage})
 	</insert>
 	
 	<update id="memberUpdate" parameterType="co.yedam.band.member.service.MemberVO">
-		UPDATE MEMEBER
+		UPDATE MEMBER
 		<!-- 동적시퀄.. -->
 		<set>
 			<if test="memberName != null">MEMBER_NAME = #{memberName},</if>
 			<if test="memberEmail != null">MEMBER_EMAIL = #{memberEmail},</if>
 			<if test="memberBirth != null">MEMBER_BIRTH = #{memberBirth},</if>
+			<if test="memberMessage != null">MEMBER_MESSAGE = #{memberMessage},</if>
 		</set>
 		WHERE MEMBER_ID = #{memberId}
 	</update>

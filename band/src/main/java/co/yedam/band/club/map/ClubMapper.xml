@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yedam.band.club.map.ClubMapper">
+
+	<select id="clubSelectList" resultType="co.yedam.band.club.service.ClubVO">
+		SELECT ROWNUM NO, CLUB_NAME, MEMBER_ID, CLUB_MAKE_DATE, CLUB_COMENT
+		FROM CLUB
+	</select>
+
+	<select id="clubSelect" resultType="co.yedam.band.club.service.ClubVO">
+		SELECT * FROM CLUB
+		WHERE CLUB_NAME = #{clubName}
+	</select>
+
+	<insert id="clubInsert" parameterType="co.yedam.band.club.service.ClubVO">
+		INSERT INTO CLUB (CLUB_NAME, MEMBER_ID, CLUB_COMENT)
+		VALUES (#{clubName}, #{memberId}, #{clubComent})
+	</insert>
+
+	<update id="clubUpdate" parameterType="co.yedam.band.club.service.ClubVO">
+		UPDATE CLUB
+		<set>
+			<if test="clubComent != null">club_coment = #{clubComent}</if>
+		</set>
+		WHERE CLUB_NAME = #{clubName}
+	</update>
+
+	<delete id="clubDelete" parameterType="co.yedam.band.club.service.ClubVO">
+		DELETE FROM CLUB
+		WHERE CLUB_NAME = #{clubName}
+	</delete>
+
+</mapper>
