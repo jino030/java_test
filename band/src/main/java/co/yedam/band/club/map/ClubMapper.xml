@@ -25,9 +25,9 @@
 		WHERE CLUB_NAME = #{clubName}
 	</update>
 
-	<delete id="clubDelete" parameterType="co.yedam.band.club.service.ClubVO">
+	<delete id="clubDelete" parameterType="String">
 		DELETE FROM CLUB
-		WHERE CLUB_NAME = #{clubName}
+		WHERE CLUB_NAME = #{value}
 	</delete>
 
 </mapper>

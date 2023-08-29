@@ -36,8 +36,8 @@ public class ClubServiceImpl implements ClubService {
 	}
 
 	@Override
-	public int clubDelete(ClubVO vo) {
-		return map.clubDelete(vo);
+	public int clubDelete(String clubName) {
+		return map.clubDelete(clubName);
 	}
 
 }

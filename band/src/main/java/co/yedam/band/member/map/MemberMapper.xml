@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="co.yedam.band.member.map.MemberMapper">
+	<select id="memberSelectList" resultType="co.yedam.band.member.service.MemberVO">
+		SELECT * FROM MEMBER
+	</select>
+	
 	<select id="memberSelect" resultType="co.yedam.band.member.service.MemberVO">
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
 		<if test="memberPassword != null">AND MEMBER_PASSWORD = #{memberPassword}</if>

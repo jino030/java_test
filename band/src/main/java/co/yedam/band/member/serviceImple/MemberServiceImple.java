@@ -1,5 +1,7 @@
 package co.yedam.band.member.serviceImple;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import co.yedam.band.common.DataSource;
@@ -11,7 +13,11 @@ public class MemberServiceImple implements MemberService {
 	private SqlSession sqlSession =  DataSource.getInstance().openSession(true);
 	private MemberMapper map = sqlSession.getMapper(MemberMapper.class);
 	
-
+	@Override
+	public List<MemberVO> memberSelectList() {
+		return map.memberSelectList();
+	}
+	
 	@Override
 	public MemberVO memberSelect(MemberVO vo) {
 		return map.memberSelect(vo);
@@ -31,5 +37,6 @@ public class MemberServiceImple implements MemberService {
 	public int memberDelete(MemberVO vo) {
 		return map.memberDelete(vo);
 	}
+
 
 }

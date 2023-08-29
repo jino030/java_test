@@ -32,9 +32,9 @@ public class ClubMenu {
 		clubMember.setClubName(clubName);
 		clubMember = mdao.clubMemberCount(clubMember); // 멤버수 가져오기
 
-		// 성공 : 조회내역 보여주기, 실패 : 실패문구 띄워주기
+		// 성공 : 조회내역 보여주기, 실패 : 등록되지 않음 띄워주기
 		if (club != null) {
-			clubInfo(club, clubMember);
+			clubInfo(club, clubMember); // 조회내역 출력
 			String result = clubMemberCheck(vo, club); // 회원 상태 반환
 
 			boolean b = true;
@@ -45,22 +45,24 @@ public class ClubMenu {
 
 				while (b) {
 					System.out.println(" ## [옵션] 1.밴드수정 / 2.밴드삭제 / 3.메인메뉴");
-					System.out.println(" ## 원하시는 옵션을 선택하세요 >> ");
+					System.out.print(" ## 원하시는 옵션을 선택하세요 >> ");
 					int key = scn.nextInt();
 					scn.nextLine();
 
 					switch (key) {
 					case 1:
 						// 밴드수정
-						System.out.println("밴드수정 함수");
+						clubUpdate(clubName);
+						b = false;
 						break;
 					case 2:
 						// 밴드삭제
-						System.out.println("밴드삭제 함수");
+						clubDelete(clubName);
+						b = false;
 						break;
 					case 3:
 						// 메인메뉴
-						System.out.println("메인메뉴로 이동합니다.");
+						System.out.println(" ## 메인메뉴로 이동합니다.");
 						b = false;
 						break;
 					}
@@ -72,18 +74,19 @@ public class ClubMenu {
 				while (b) {
 					System.out.println(" ★가입된 밴드입니다.");
 					System.out.println(" ## [옵션] 1.밴드탈퇴 / 2.메인메뉴");
-					System.out.println(" ## 원하시는 옵션을 선택하세요 >> ");
+					System.out.print(" ## 원하시는 옵션을 선택하세요 >> ");
 					int key = scn.nextInt();
 					scn.nextLine();
 
 					switch (key) {
 					case 1:
 						// 밴드탈퇴
-						System.out.println("밴드탈퇴 함수");
+						clubMemberDelete(clubName);
+						b = false;
 						break;
 					case 2:
 						// 메인메뉴
-						System.out.println("메인메뉴로 이동합니다.");
+						System.out.println(" ## 메인메뉴로 이동합니다.");
 						b = false;
 						break;
 					}
@@ -94,14 +97,15 @@ public class ClubMenu {
 
 				while (b) {
 					System.out.println(" ## [옵션] 1.밴드가입 / 2.메인메뉴");
-					System.out.println(" ## 원하시는 옵션을 선택하세요 >> ");
+					System.out.print(" ## 원하시는 옵션을 선택하세요 >> ");
 					int key = scn.nextInt();
 					scn.nextLine();
 
 					switch (key) {
 					case 1:
 						// 밴드가입
-						System.out.println("밴드가입 함수");
+						clubMemberInsert(clubName);
+						b = false;
 						break;
 					case 2:
 						// 메인메뉴
@@ -124,9 +128,75 @@ public class ClubMenu {
 
 	}
 
-	// 상세조회 성공 시 : 모임주인지 여부 확인, 밴드 가입상태 여부 확인
-	public String clubMemberCheck(MemberVO vo, ClubVO club) {
+	private void clubMemberInsert(String clubName) {
+		ClubMemberVO clubMember = new ClubMemberVO();
+		clubMember.setMemberId(vo.getMemberId());
+		clubMember.setClubName(clubName);
 
+		int n = mdao.clubMemberInsert(clubMember);
+
+		if (n != 0) {
+			System.out.println(" ## 정상적으로 가입되었습니다!");
+		} else {
+			System.out.println(" ## 죄송합니다, 오류가 발생했습니다. 다시 시도해주세요.");
+		}
+	}
+
+	private void clubMemberDelete(String clubName) {
+		ClubMemberVO clubMember = new ClubMemberVO();
+		clubMember.setMemberId(vo.getMemberId());
+		clubMember.setClubName(clubName);
+
+		System.out.print(" ## 정말로 밴드에서 탈퇴하시겠습니까? (Y/N) >> ");
+		String yn = scn.nextLine();
+
+		if (yn.equals("Y") || yn.equals("y")) {
+			int n = mdao.clubMemberDelete(clubMember);
+
+			if (n != 0) {
+				System.out.println(" ## 탈퇴 되었습니다.");
+			} else {
+				System.out.println(" ## 탈퇴하지 못했습니다.");
+			}
+		} else {
+			System.out.println(" ## 취소 되었습니다.");
+		}
+	}
+
+	private void clubDelete(String clubName) {
+		System.out.print(" ## 정말로 삭제하시겠습니까? (Y/N) >> ");
+		String yn = scn.nextLine();
+
+		if (yn.equals("Y") || yn.equals("y")) {
+			int n = dao.clubDelete(clubName);
+
+			if (n != 0) {
+				System.out.println(" ## 삭제 되었습니다.");
+			} else {
+				System.out.println(" ## 삭제하지 못했습니다.");
+			}
+		} else {
+			System.out.println(" ## 취소 되었습니다.");
+		}
+	}
+
+	private void clubUpdate(String clubName) {
+		ClubVO vo = new ClubVO();
+		System.out.print(" ## [수정] 밴드소개 문구 >> ");
+		vo.setClubComent(scn.nextLine());
+		vo.setClubName(clubName);
+
+		int n = dao.clubUpdate(vo);
+
+		if (n != 0) {
+			System.out.println(" ## 정상적으로 수정되었습니다!");
+		} else {
+			System.out.println(" ## 수정하지 못했습니다.");
+		}
+
+	}
+
+	private String clubMemberCheck(MemberVO vo, ClubVO club) {
 		if (vo.getMemberId().equals(club.getMemberId())) {
 			// 모임주 이면
 			return "owner";
@@ -144,7 +214,7 @@ public class ClubMenu {
 					count++;
 				}
 			}
-			
+
 			if (count != 0) {
 				return "member";
 			} else {
@@ -160,8 +230,12 @@ public class ClubMenu {
 		System.out.println("--------------------------------------------");
 		System.out.println("                 밴드 둘러보기                  ");
 		System.out.println("--------------------------------------------");
-		for (ClubVO c : clubList) {
-			c.clubPrint();
+		if (clubList.size() == 0) {
+			System.out.println("             생성된 밴드가 없습니다!!");
+		} else {
+			for (ClubVO c : clubList) {
+				c.clubPrint();
+			}
 		}
 		System.out.println("--------------------------------------------");
 		System.out.println(" ## 총 " + clubList.size() + "개의 밴드가 만들어져있습니다!");

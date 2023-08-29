@@ -7,5 +7,5 @@ public interface ClubService {
 	ClubVO clubSelect(ClubVO vo);
 	int clubInsert(ClubVO vo);
 	int clubUpdate(ClubVO vo);
-	int clubDelete(ClubVO vo);
+	int clubDelete(String clubName);
 }

@@ -3,6 +3,7 @@ package co.yedam.band;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import co.yedam.band.common.SHA256;
@@ -113,8 +114,19 @@ public class MenuManager {
 		System.out.print(" ## 이메일 입력 >> ");
 		vo.setMemberEmail(scn.nextLine());
 
+		// 아이디 검증..
+		List<MemberVO> members = dao.memberSelectList();
+		String id = vo.getMemberId();
+		for(MemberVO m : members) {
+			if(id.equals(m.getMemberId())) {
+				System.out.println(" ## 이미 존재하는 아이디 입니다. 다시 시도해주세요.");
+				return;
+			}
+		}
+		
+		// 회원 insert
 		int n = dao.memberInsert(vo);
-
+		
 		if (n != 0) {
 			System.out.println("");
 			System.out.println(" ## 회원가입 성공! 로그인 후 이용 바랍니다.");
@@ -122,5 +134,7 @@ public class MenuManager {
 			System.out.println("");
 			System.out.println(" ## 회원가입 실패! 다시 시도해주세요.");
 		}
+		
+		
 	}// end of join()
 }
