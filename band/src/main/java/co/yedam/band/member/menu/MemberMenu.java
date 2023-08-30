@@ -3,7 +3,6 @@ package co.yedam.band.member.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import co.yedam.band.MenuManager;
 import co.yedam.band.club.menu.ClubMenu;
 import co.yedam.band.member.service.MemberService;
 import co.yedam.band.member.service.MemberVO;
@@ -16,15 +15,15 @@ public class MemberMenu {
 
 	private void title() {
 		System.out.println("");
-		System.out.println("--------------------------------------------");
+		System.out.println(" --------------------------------------------");
 		System.out.println("                   M E N U                  ");
-		System.out.println("--------------------------------------------");
-		System.out.println("       1. 마이페이지");
-		System.out.println("       2. 밴드 만들기");
-		System.out.println("       3. 밴드 둘러보기");
-		System.out.println("       4. 밴드 상세보기");
-		System.out.println("       5. 로그아웃");
-		System.out.println("--------------------------------------------");
+		System.out.println(" --------------------------------------------");
+		System.out.println("        1. 마이페이지");
+		System.out.println("        2. 밴드 만들기");
+		System.out.println("        3. 밴드 둘러보기");
+		System.out.println("        4. 밴드 상세보기");
+		System.out.println("        5. 로그아웃");
+		System.out.println(" --------------------------------------------");
 		System.out.print(" ## 서비스 번호를 선택 >> ");
 	}
 
@@ -68,7 +67,18 @@ public class MemberMenu {
 	}
 
 	private boolean memberDelete(MemberVO vo) {
-		System.out.print(" ## 정말로 탈퇴하시겠습니까? (Y/N) >> ");
+		System.out.println(
+				  "\n"
+				+ " |￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣|\r\n"
+				+ " |　주의!　　　　　　　　　　         [-][×] |\r\n"
+				+ " |￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣|\r\n"
+				+ " |　탈퇴하시면 복구는 불가능 합니다                |\r\n"
+				+ " |　정말 탈퇴하시겠습니까?                      |\r\n"
+				+ " |　　　＿＿＿＿＿＿　　　＿＿＿＿＿＿　　　　|\r\n"
+				+ " | 　　｜    Y    |    ｜    N    ｜　 　　|\r\n"
+				+ " |　　　￣￣￣￣￣￣　　　￣￣￣￣￣￣　　　　|\r\n"
+				+ " ￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣￣\r\n");
+		System.out.print(" ## (Y/N) >> ");
 		String yn = scn.nextLine();
 
 		if (yn.equals("Y") || yn.equals("y")) {
@@ -159,18 +169,18 @@ public class MemberMenu {
 
 	private void mypageTitle(MemberVO vo) {
 		System.out.println("");
-		System.out.println("--------------------------------------------");
-		System.out.println("                   My Page                  ");
-		System.out.println("--------------------------------------------");
-		System.out.println("       ♥ 이름 : " + vo.getMemberName());
-		System.out.println("       ♥ 아이디 : " + vo.getMemberId());
-		System.out.println("       ♥ 이메일 : " + vo.getMemberEmail());
-		System.out.println("       ♥ 생일 : " + vo.getMemberBirth());
-		System.out.println("       ♥ 상태 메세지 : " + (vo.getMemberMessage() == null ? "-" : vo.getMemberMessage()));
-		System.out.println("       ♥ 가입일자 : " + vo.getEnterDate());
-		System.out.println("--------------------------------------------");
-		System.out.println("       1. 수정하기 / 2. 회원탈퇴 / 3. 메인메뉴");
-		System.out.println("--------------------------------------------");
+		System.out.println(" --------------------------------------------");
+		System.out.println("                    My Page                  ");
+		System.out.println(" --------------------------------------------");
+		System.out.println("        ♥ 이름 : " + vo.getMemberName());
+		System.out.println("        ♥ 아이디 : " + vo.getMemberId());
+		System.out.println("        ♥ 이메일 : " + vo.getMemberEmail());
+		System.out.println("        ♥ 생일 : " + vo.getMemberBirth());
+		System.out.println("        ♥ 상태 메세지 : " + (vo.getMemberMessage() == null ? "-" : vo.getMemberMessage()));
+		System.out.println("        ♥ 가입일자 : " + vo.getEnterDate());
+		System.out.println(" --------------------------------------------");
+		System.out.println("        1. 수정하기 / 2. 회원탈퇴 / 3. 메인메뉴");
+		System.out.println(" --------------------------------------------");
 		System.out.print(" ## 서비스 번호를 선택 >> ");
 	}
 

@@ -81,7 +81,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>co.yeadam.band.App</mainClass>
+							<mainClass>co.yedam.band.App</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>

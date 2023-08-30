@@ -20,29 +20,41 @@ public class MenuManager {
 	private MemberMenu mm = new MemberMenu();
 
 	private void welcomeMessage() {
+		System.out.println(
+				  "\n"
+				+ "\t.　 ∧ ∧\r\n"
+				+ "\t　( - з -) ＜ Welcome!\r\n"
+				+ "\t┏━〇〇━━━━━━━━━━━━━━━┓\r\n"
+				+ "\t┃                    ┃\r\n"
+				+ "\t┃    YEDAM BAND ♥    ┃\r\n"
+				+ "\t┃                    ┃\r\n"
+				+ "\t┗┳┳━━━━━━━━━━━━━━━━┳┳┛\r\n"
+				+ "\t ┗┛                ┗┛\r\n"
+				+ "");
 		System.out.println(" ## Bend Club에 방문해주셔서 감사합니다!");
 		System.out.println(" ## 서비스를 이용하시려면 로그인 또는 회원가입을 진행해주세요!");
 	}
 
 	private void title() {
 		System.out.println("");
-		System.out.println("--------------------------------------------");
-		System.out.println("                   M E N U                  ");
-		System.out.println("--------------------------------------------");
-		System.out.println("       1. 로그인");
-		System.out.println("       2. 회원가입");
-		System.out.println("       3. 프로그램 종료");
-		System.out.println("--------------------------------------------");
+		System.out.println(" --------------------------------------------");
+		System.out.println("                    M E N U                  ");
+		System.out.println(" --------------------------------------------");
+		System.out.println("        1. 로그인");
+		System.out.println("        2. 회원가입");
+		System.out.println("        3. 프로그램 종료");
+		System.out.println(" --------------------------------------------");
 		System.out.print(" ## 서비스 번호를 선택 >> ");
 	}
 
 	public void run() {
-		welcomeMessage();
 		boolean b = true;
 
 		while (b) {
+			welcomeMessage();
 			title();
 			int key = -1;
+			
 			try {
 				key = scn.nextInt();
 			} catch(InputMismatchException e) {
@@ -63,7 +75,18 @@ public class MenuManager {
 				join();
 				break;
 			case 3:
-				System.out.println(" ## 프로그램을 종료합니다!");
+				System.out.println(" ## 프로그램을 종료합니다!\n");
+				System.out.println(
+						  "\t __                           \r\n"
+						+ "\t/\\ \\                          \r\n"
+						+ "\t\\ \\ \\____   __  __       __   \r\n"
+						+ "\t \\ \\ '__`\\ /\\ \\/\\ \\    /'__`\\ \r\n"
+						+ "\t  \\ \\ \\L\\ \\\\ \\ \\_\\ \\  /\\  __/ \r\n"
+						+ "\t   \\ \\_,__/ \\/`____ \\ \\ \\____\\\r\n"
+						+ "\t    \\/___/   `/___/> \\ \\/____/\r\n"
+						+ "\t                /\\___/        \r\n"
+						+ "\t                \\/__/         ");
+				
 				b = false;
 				scn.close();
 				break;

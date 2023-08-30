@@ -13,6 +13,6 @@ public class ClubVO {
 	private String clubComent;
 	
 	public void clubPrint() {
-		System.out.println(" " + no + ". 모임명(" + clubName + ") / 개설자(" + memberId + ")");
+		System.out.println("  " + no + ". 모임명(" + clubName + ") / 개설자(" + memberId + ")");
 	}
 }

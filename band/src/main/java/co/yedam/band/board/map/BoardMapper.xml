@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.yedam.band.board.map.BoardMapper">
+	
+	<select id="boardSelectList" resultType="co.yedam.band.board.service.BoardVO">
+		SELECT * FROM BOARD
+		WHERE CLUB_NAME = #{clubName}
+	</select>
+	
+	<select id="boardSelect" resultType="co.yedam.band.board.service.BoardVO">
+		SELECT * 
+		FROM  BOARD
+		WHERE BOARD_NUMBER = #{boardNumber}
+		AND CLUB_NAME = #{clubName}
+	</select>
+	
+	<insert id="boardInsert" parameterType="co.yedam.band.board.service.BoardVO">
+		<selectKey keyProperty="boardNumber" resultType="int" order="BEFORE">
+			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1 
+				   ELSE MAX(BOARD_NUMBER) + 1 END AS boardNumber 
+			FROM   BOARD
+		</selectKey>
+		INSERT INTO BOARD (BOARD_NUMBER, BOARD_TITLE, BOARD_CONTENT, MEMBER_ID, CLUB_NAME)
+		VALUES (#{boardNumber}, #{boardTitle}, #{boardContent}, #{memberId}, #{clubName})
+	</insert>
+	
+	<insert id="boardInsertTitle" parameterType="co.yedam.band.board.service.BoardVO">
+		<selectKey keyProperty="boardNumber" resultType="int" order="BEFORE">
+			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1 
+				   ELSE MAX(BOARD_NUMBER) + 1 END AS boardNumber 
+			FROM   BOARD
+		</selectKey>
+		INSERT INTO BOARD (BOARD_NUMBER, BOARD_TITLE, MEMBER_ID, CLUB_NAME)
+		VALUES (#{boardNumber}, #{boardTitle}, #{memberId}, #{clubName})
+	</insert>
+	
+	<insert id="boardInsertContent" parameterType="co.yedam.band.board.service.BoardVO">
+		<selectKey keyProperty="boardNumber" resultType="int" order="BEFORE">
+			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1 
+				   ELSE MAX(BOARD_NUMBER) + 1 END AS boardNumber 
+			FROM   BOARD
+		</selectKey>
+		INSERT INTO BOARD (BOARD_NUMBER, BOARD_CONTENT, MEMBER_ID, CLUB_NAME)
+		VALUES (#{boardNumber}, #{boardContent}, #{memberId}, #{clubName})
+	</insert>
+	
+	<update id="boardUpdate" parameterType="co.yedam.band.board.service.BoardVO">
+		UPDATE BOARD
+		<set>
+			<if test="boardTitle != null">BOARD_TITLE = #{boardTitle},</if>
+			<if test="boardContent != null">BOARD_CONTENT = #{boardContent},</if>
+		</set>
+		WHERE BOARD_NUMBER = #{boardNumber}
+		AND MEMBER_ID = #{memberId}
+	</update>
+	
+	<update id="boardLikeHate" parameterType="co.yedam.band.board.service.BoardVO">
+		UPDATE BOARD
+		<set>
+			<if test="boardLike == 1">
+			BOARD_LIKE = (	SELECT NVL(MAX(BOARD_LIKE),0) + 1
+							FROM BOARD
+							WHERE BOARD_NUMBER = #{boardNumber})
+			</if>
+			<if test="boardHate == 1">
+			BOARD_HATE = (	SELECT NVL(MAX(BOARD_HATE),0) + 1
+							FROM BOARD
+							WHERE BOARD_NUMBER = #{boardNumber})
+			</if>
+		</set>
+	</update>
+	
+	<delete id="boardDelete" parameterType="co.yedam.band.board.service.BoardVO">
+		DELETE FROM BOARD
+		WHERE BOARD_NUMBER = #{boardNumber}
+		  AND MEMBER_ID = #{memberId}
+	</delete>
+</mapper>
