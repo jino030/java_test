@@ -158,8 +158,10 @@ public class ClubMenu {
 			} else {
 				System.out.println(" ## 탈퇴하지 못했습니다.");
 			}
-		} else {
+		} else if (yn.equals("N") || yn.equals("n")) {
 			System.out.println(" ## 취소 되었습니다.");
+		} else {
+			System.out.println(" ## 잘못 누르셨습니다. 메인화면으로 돌아갑니다.");
 		}
 	}
 
@@ -175,8 +177,10 @@ public class ClubMenu {
 			} else {
 				System.out.println(" ## 삭제하지 못했습니다.");
 			}
-		} else {
+		} else if (yn.equals("N") || yn.equals("n")) {
 			System.out.println(" ## 취소 되었습니다.");
+		} else {
+			System.out.println(" ## 잘못 누르셨습니다. 메인화면으로 돌아갑니다.");
 		}
 	}
 

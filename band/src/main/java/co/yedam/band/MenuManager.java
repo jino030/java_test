@@ -19,12 +19,12 @@ public class MenuManager {
 	private SHA256 sha256 = new SHA256(); // 암호화
 	private MemberMenu mm = new MemberMenu();
 
-	public void welcomeMessage() {
+	private void welcomeMessage() {
 		System.out.println(" ## Bend Club에 방문해주셔서 감사합니다!");
 		System.out.println(" ## 서비스를 이용하시려면 로그인 또는 회원가입을 진행해주세요!");
 	}
 
-	public void title() {
+	private void title() {
 		System.out.println("");
 		System.out.println("--------------------------------------------");
 		System.out.println("                   M E N U                  ");
@@ -55,8 +55,8 @@ public class MenuManager {
 			case 1: // 로그인
 				MemberVO vo = login();
 				if (vo != null) {
-					mm.run(vo); // 회원만 메인메뉴 접속가능
-					b = false;
+					mm.run(vo); // 회원만 멤버메뉴 접속가능
+					//b = false;
 				}
 				break;
 			case 2: // 회원가입
@@ -68,7 +68,7 @@ public class MenuManager {
 				scn.close();
 				break;
 			default:
-				System.out.println(" ## 잘못 선택하셨습니다. 서비스 번호는 숫자만 입력 가능합니다.");
+				System.out.println(" ## 잘못 선택하셨습니다. 서비스 번호는 1~3까지 숫자만 입력 가능합니다.");
 				break;
 			}
 		}
@@ -134,7 +134,5 @@ public class MenuManager {
 			System.out.println("");
 			System.out.println(" ## 회원가입 실패! 다시 시도해주세요.");
 		}
-		
-		
 	}// end of join()
 }

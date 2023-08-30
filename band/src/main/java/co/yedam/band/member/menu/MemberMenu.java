@@ -1,7 +1,9 @@
 package co.yedam.band.member.menu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import co.yedam.band.MenuManager;
 import co.yedam.band.club.menu.ClubMenu;
 import co.yedam.band.member.service.MemberService;
 import co.yedam.band.member.service.MemberVO;
@@ -21,7 +23,7 @@ public class MemberMenu {
 		System.out.println("       2. 밴드 만들기");
 		System.out.println("       3. 밴드 둘러보기");
 		System.out.println("       4. 밴드 상세보기");
-		System.out.println("       5. 종료");
+		System.out.println("       5. 로그아웃");
 		System.out.println("--------------------------------------------");
 		System.out.print(" ## 서비스 번호를 선택 >> ");
 	}
@@ -32,8 +34,14 @@ public class MemberMenu {
 
 		while (b) {
 			title();
-			int key = scn.nextInt();
-			scn.nextLine();
+			int key = -1;
+			try {
+				key = scn.nextInt();
+			} catch(InputMismatchException e) {
+				// 오류가 발생하면 switch의 default로..
+			} finally {
+				scn.nextLine();
+			}
 
 			switch (key) {
 			case 1: //1. 마이페이지
@@ -49,9 +57,11 @@ public class MemberMenu {
 				cm.clubSelect();
 				break;
 			case 5: //5. 종료
-				System.out.println(" ## 프로그램을 종료합니다.");
+				System.out.println(" ## 로그아웃되었습니다. 좋은하루 보내세요!");
 				b = false;
-				scn.close();
+				break;
+			default:
+				System.out.println(" ## 잘못 선택하셨습니다. 1~5까지 숫자만 입력 가능합니다.");
 				break;
 			}
 		}
@@ -119,8 +129,14 @@ public class MemberMenu {
 
 		while (b) {
 			mypageTitle(member);
-			int key = scn.nextInt();
-			scn.nextLine();
+			int key = -1;
+			try {
+				key = scn.nextInt();
+			} catch(InputMismatchException e) {
+				// 오류가 발생하면 switch의 default로..
+			} finally {
+				scn.nextLine();
+			}
 
 			switch (key) {
 			case 1:
@@ -132,6 +148,9 @@ public class MemberMenu {
 			case 3:
 				System.out.println(" ## 메인메뉴로 돌아갑니다~!");
 				b = false;
+				break;
+			default:
+				System.out.println(" ## 잘못 선택하셨습니다. 1~3까지 숫자만 입력 가능합니다.");
 				break;
 			}
 		}
