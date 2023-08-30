@@ -28,16 +28,6 @@ public class BoardServiceImpl implements BoardService {
 	public int boardInsert(BoardVO vo) {
 		return map.boardInsert(vo);
 	}
-	
-	@Override
-	public int boardInsertTitle(BoardVO vo) {
-		return map.boardInsertTitle(vo);
-	}
-
-	@Override
-	public int boardInsertContent(BoardVO vo) {
-		return map.boardInsertContent(vo);
-	}
 
 	@Override
 	public int boardUpdate(BoardVO vo) {

@@ -82,19 +82,15 @@ public class BoardMenu {
 		// 사용자가 enter치고 넘어갔을 경우
 		if (board.getBoardTitle().equals("") && board.getBoardContent().equals("")) {
 			// 제목과 내용 전부 입력하지 않았을 경우
-			System.out.println(" ## 변경사항이 없습니다.");
+			System.out.println(" ## 입력된 내용이 없습니다. 다시 시도하세요.");
 		} else if (board.getBoardTitle().equals("")) {
-			// 제목을 입력하지 않았을 경우			
-			int n = dao.boardInsertContent(board);
-			if (n != 0) {
-				System.out.println(" ## 게시물이 정상적으로 등록되었습니다!");
-			} else {
-				System.out.println(" ## 게시물 등록에 실패했습니다! 다시 시도 해주세요.");
-			}
-			
+			// 제목을 입력하지 않았을 경우
+			System.out.println(" ## 제목을 입력하지 않으셨습니다. 다시 시도하세요.");
 		} else if (board.getBoardContent().equals("")) {
 			// 내용을 입력하지 않았을 경우
-			int n = dao.boardInsertTitle(board);
+			System.out.println(" ## 내용을 입력하지 않으셨습니다. 다시 시도하세요.");
+		} else {
+			int n = dao.boardInsert(board);
 			if (n != 0) {
 				System.out.println(" ## 게시물이 정상적으로 등록되었습니다!");
 			} else {
@@ -299,9 +295,9 @@ public class BoardMenu {
 		int n = dao.boardUpdate(vo);
 
 		if (n != 0) {
-			System.out.println("정상적으로 수정되었습니다!");
+			System.out.println(" ## 정상적으로 수정되었습니다!");
 		} else {
-			System.out.println("수정 실패, 다시 시도해주세요.");
+			System.out.println(" ## 수정 실패, 다시 시도해주세요.");
 		}
 	}
 

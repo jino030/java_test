@@ -24,26 +24,6 @@
 		VALUES (#{boardNumber}, #{boardTitle}, #{boardContent}, #{memberId}, #{clubName})
 	</insert>
 	
-	<insert id="boardInsertTitle" parameterType="co.yedam.band.board.service.BoardVO">
-		<selectKey keyProperty="boardNumber" resultType="int" order="BEFORE">
-			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1 
-				   ELSE MAX(BOARD_NUMBER) + 1 END AS boardNumber 
-			FROM   BOARD
-		</selectKey>
-		INSERT INTO BOARD (BOARD_NUMBER, BOARD_TITLE, MEMBER_ID, CLUB_NAME)
-		VALUES (#{boardNumber}, #{boardTitle}, #{memberId}, #{clubName})
-	</insert>
-	
-	<insert id="boardInsertContent" parameterType="co.yedam.band.board.service.BoardVO">
-		<selectKey keyProperty="boardNumber" resultType="int" order="BEFORE">
-			SELECT CASE WHEN MAX(BOARD_NUMBER) IS NULL THEN 1 
-				   ELSE MAX(BOARD_NUMBER) + 1 END AS boardNumber 
-			FROM   BOARD
-		</selectKey>
-		INSERT INTO BOARD (BOARD_NUMBER, BOARD_CONTENT, MEMBER_ID, CLUB_NAME)
-		VALUES (#{boardNumber}, #{boardContent}, #{memberId}, #{clubName})
-	</insert>
-	
 	<update id="boardUpdate" parameterType="co.yedam.band.board.service.BoardVO">
 		UPDATE BOARD
 		<set>
