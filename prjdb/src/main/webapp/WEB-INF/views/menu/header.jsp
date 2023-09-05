@@ -13,7 +13,7 @@
 		<ul>
 			<li><a href="home.do">Home</a></li>
 			<li><a href="#">Book</a></li>
-			<li><a href="#">Content</a></li>
+			<li><a href="noticeselectlist.do">Notice</a></li>
 			<c:if test="${empty id}">
 				<li><a href="memberjoinform.do">Join</a></li>
 				<li><a href="memberloginform.do">Login</a></li>

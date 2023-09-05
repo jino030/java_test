@@ -15,12 +15,12 @@
 	</select>
 	
 	<insert id="noticeInsert" parameterType="co.yedam.prjdb.notice.service.NoticeVO">
-	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+	<selectKey keyProperty="noticeId" resultType="int" order="BEFORE">
 		SELECT NVL(MAX(NOTICE_ID), 0) + 1 AS ID FROM NOTICE
 	</selectKey>
 		INSERT INTO NOTICE
-		VALUES (#{id}, #{noticeWriter}, #{noticeTitle}, #{noticeSubject}, #{noticeDate}, 
-				0, #{noticeAttech}, #{noticeImage}, #{noticeWriterName})
+		VALUES (#{noticeId}, #{noticeWriter}, #{noticeTitle}, #{noticeSubject}, #{noticeDate}, 
+				0, #{noticeAttech}, #{noticeImage}, #{noticeWriterName}, #{noticeThumb})
 	</insert>
 	
 	<update id="noticeUdpate"></update>
