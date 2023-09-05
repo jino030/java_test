@@ -7,6 +7,7 @@
 		<if test="key == 'title'">WHERE NOTICE_TITLE LIKE '%'|| #{val} ||'%'</if>
 		<if test="key == 'subject'">WHERE NOTICE_SUBJECT LIKE '%'|| #{val} ||'%'</if>
 		<if test="key == 'writer'">WHERE NOTICE_WRITER LIKE '%'|| #{val} ||'%'</if>
+		ORDER BY NOTICE_ID
 	</select>
 	
 	<select id="noticeSelect" resultType="co.yedam.prjdb.notice.service.NoticeVO">

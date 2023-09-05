@@ -55,8 +55,12 @@ public class NoticeWrite extends HttpServlet {
 			String attechFile = multi.getFilesystemName("attechfile");
 			vo.setNoticeAttech(attechFile);
 		}
+		
 		String fileExt = imgFileName.substring(imgFileName.lastIndexOf(".")+1); //확장자 명
-		vo.setNoticeThumb(thumbNail.makeThumbnail(saveDir + File.separator + imgFileName, imgFileName, fileExt, saveDir + File.separator)); //썸네일 생성 후 vo set
+		String thumb = thumbNail.makeThumbnail(saveDir + File.separator + realImg, realImg, fileExt, saveDir + File.separator);
+		thumb = thumb.substring(thumb.lastIndexOf("\\")+1);
+		vo.setNoticeThumb(thumb); //썸네일 생성 후 vo set
+		
 		
 		// vo 객체에 넘어온 데이터 set
 		vo.setNoticeWriter(multi.getParameter("noticeWriter"));

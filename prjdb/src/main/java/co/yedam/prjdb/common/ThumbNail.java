@@ -25,7 +25,7 @@ public class ThumbNail {
 			BufferedImage srcImg = ImageIO.read(new File(filePathAll));
 			
 			// 썸네일의 너비와 높이 입니다.
-			int dw = 250, dh = 150;
+			int dw = 200, dh = 100;
 			
 			// 원본 이미지의 너비와 높이 입니다.
 			int ow = srcImg.getWidth();
