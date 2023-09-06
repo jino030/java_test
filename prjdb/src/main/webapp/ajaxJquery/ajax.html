@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ajax.html</title>
+  <script>
+    let json = `[{"name":"홍길동", "age":20},{"name":"김길동", "age":50}]`;
+    // json 포맷의 문자 => 자바스크립트의 객체로 쉽게 변환가능.. => JSON.parse();
+    let obj = JSON.parse(json);
+    // 자바스크립트의 객체 => json 포맷의 문자 => JSON.stringify();
+    console.log(obj);
+
+    let str = JSON.stringify(obj);
+    console.log(str);
+  </script>
+</head>
+
+<body>
+  <h2>Asynchronous Javascript And Xml</h2>
+
+  <P>
+    JSON 형태<br>
+    {<br>
+    "school" : [<br>
+    {"class":"홍길동", "name":"3-1"}]<br>
+    }<br>
+  </P>
+
+  <ul id="list">
+    <li class="test">first + last</li>
+  </ul>
+
+  <script>
+    // Ajax 처리 객체 : XMLHttpRequest
+    let ajx = new XMLHttpRequest();
+    ajx.open('get', '../ajaxReplyList.do?noticeId=2'); // ajax.html과 같은 위치에 있는 index.html 을 가져오겠습니다..
+    ajx.send();
+    // 서버에 요청한 결과가 도착하면 onload라는 이벤트를 시작? => 이벤트가 발생하면 genHTML() or getJson() 함수를 실행하겠습니다(genHTML || getJson: 콜백함수)
+    ajx.onload = getReply;
+
+    function getJson() {
+      let json = ajx.responseText;
+      let data = JSON.parse(json);
+
+      for(let i in data){
+        let li = document.createElement('li');
+        li.innerText = data[i].first_name + " " + data[i].last_name;
+        document.querySelector('#list').appendChild(li);
+        //console.log(data[i].first_name + " " + data[i].last_name);
+      }
+
+      console.log(data);
+    }
+
+    function genXML() {
+      console.log(ajx.responseXML);
+      let xml = ajx.responseXML;
+      let records = xml.getElementsByTagName('record');
+
+      for (let i = 0; i < records.length; i++) {
+        let li = document.createElement('li');
+        li.innerText = records[i].children[1].innerHTML + " " + records[i].children[2].innerHTML
+        document.getElementById('list').appendChild(li);
+      }
+    }
+
+    function getReply() {
+      console.log(ajx);
+      let json = ajx.responseText;
+      let data = JSON.parse(json)
+      console.log(data);
+    }
+
+  </script>
+</body>
+
+</html>

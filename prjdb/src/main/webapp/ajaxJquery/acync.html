@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>acync.html</title>
+</head>
+
+<body>
+  <h1>동기 처리</h1>
+  <p>순차적으로 처리되는 방식(위에서 아래로)</p>
+  <hr>
+  <h1>비동기 처리</h1>
+  <p>순차적으로 처리되지않는 방식<br>
+    코드의 순서와 상관없이 먼저 끝나는대로 처리.
+  </p>
+
+  <script>
+    function syncFnc() {
+      let num = 10;
+      console.log(num);
+
+      num *= 2;
+      console.log(num);
+    }
+
+    //syncFnc();
+
+    function asyncFnc() {
+      let friends = [];
+
+      setTimeout(function () { // 첫번째 매개변수 : 함수, 두번째 매개변수 : 지연시간?
+        friends.push({ name: "1hone", phone: "1111" });
+        console.log(friends);
+      }, 3000);
+      setTimeout(function () {
+        friends.push({ name: "2hone", phone: "2222" });
+        console.log(friends);
+      }, 2000);
+      setTimeout(function () {
+        friends.push({ name: "3hone", phone: "3333" });
+        console.log(friends);
+      }, 1000);
+      console.log("end friends ::: " + friends);
+    }
+
+    asyncFnc();
+    syncFnc();
+
+  </script>
+</body>
+
+</html>

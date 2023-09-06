@@ -21,7 +21,7 @@
 	}
 
 	th {
-		text-align: left;
+		text-align: center;
 	}
 
 	thead {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <style>
+    table {border: 1px solid #ccc; border-collapse: collapse;}
+    th,td {border: 1px solid #ccc; padding: 5px;}
+
+    table input {border: none; color: #3937c9;}
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>Apple</li>
+    <li>Banana</li>
+  </ul>
+  <div id="clone"></div>
+
+  <ul id="myHobby"></ul>
+
+  <ul class="fruits">
+    <li>테스트용</li>
+    <li>테스트용</li>
+    <li>테스트용</li>
+  </ul>
+
+  <input type="text" id="cute" value="귀여워">
+
+  <table>
+    <tbody>
+      <tr>
+        <th>이름</th>
+        <td><input type="text" name="name" value="홍길동"></td>
+      </tr>
+      <tr>
+        <th>나이</th>
+        <td><input type="text" name="age" value="20"></td>
+      </tr>
+      <tr>
+        <th>연락처</th>
+        <td><input type="text" name="phone" value="010-1111"></td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button class="add">등록</button>
+          <button class="edit">수정</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+  <table id="memberList">
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>연락처</th>
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>홍길동1</td>
+        <td>20</td>
+        <td>010-1234-5678</td>
+        <td><button onclick="del(this)">삭제</button></td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <script src="dom.js"></script>
+  <!-- <script src="obj.js"></script> -->
+  <!-- <script src="ary.js"></script> -->
+  <script src="objAry.js"></script>
+</body>
+
+</html>

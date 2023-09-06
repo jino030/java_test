@@ -22,7 +22,7 @@
 				<tr>
 					<th>이미지</th>
 					<td colspan="5">
-						<img alt="" src="attech/notice/${n.noticeImage}">
+						<img alt="" src="attech/notice/THUMB_${n.noticeImage}">
 					</td>
 				</tr>
 				<tr>
@@ -32,7 +32,7 @@
 				<tr>
 					<th>내 용</th>
 					<td colspan="5">
-						<textarea rows="10" cols="80">${n.noticeSubject}</textarea>
+						<textarea rows="3" cols="80" disabled>${n.noticeSubject}</textarea>
 					</td>
 				</tr>
 				<tr>
