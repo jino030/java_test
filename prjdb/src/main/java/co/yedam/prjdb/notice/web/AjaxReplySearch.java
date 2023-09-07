@@ -1,9 +1,6 @@
 package co.yedam.prjdb.notice.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,31 +15,26 @@ import co.yedam.prjdb.notice.service.ReplyService;
 import co.yedam.prjdb.notice.service.ReplyVO;
 import co.yedam.prjdb.notice.serviceImpl.ReplyServiceImpl;
 
-@WebServlet("/ajaxReplyList.do")
-public class AjaxReplyList extends HttpServlet {
+@WebServlet("/ajaxReplySearch.do")
+public class AjaxReplySearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AjaxReplyList() {
+    public AjaxReplySearch() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String rid = request.getParameter("rid");
 		ReplyService dao = new ReplyServiceImpl();
-		List<ReplyVO> list = new ArrayList<>();
+		
+		ReplyVO vo = dao.replySelect(Integer.parseInt(rid));
+		
 		ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()); //json 형태의 데이터로 반환 => jackson 라이브러리 사용
-		
-		// 이해가 안가...
-		String noticeId = request.getParameter("noticeId");
-		
-		list = dao.replySelectList(Integer.parseInt(noticeId));
-		String json = objectMapper.writeValueAsString(list);
+		String json = objectMapper.writeValueAsString(vo);
 		
 		response.setContentType("text/json; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(json);
-		
-		
-		
+		response.getWriter().append(json);
 		
 	}
 

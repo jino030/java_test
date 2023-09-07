@@ -1,9 +1,6 @@
 package co.yedam.prjdb.notice.web;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,37 +8,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import co.yedam.prjdb.notice.service.ReplyService;
 import co.yedam.prjdb.notice.service.ReplyVO;
 import co.yedam.prjdb.notice.serviceImpl.ReplyServiceImpl;
 
-@WebServlet("/ajaxReplyList.do")
-public class AjaxReplyList extends HttpServlet {
+@WebServlet("/ajaxReplyDelete.do")
+public class AjaxReplyDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AjaxReplyList() {
+    public AjaxReplyDelete() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ReplyService dao = new ReplyServiceImpl();
-		List<ReplyVO> list = new ArrayList<>();
-		ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()); //json 형태의 데이터로 반환 => jackson 라이브러리 사용
+		ReplyVO vo = new ReplyVO();
 		
-		// 이해가 안가...
-		String noticeId = request.getParameter("noticeId");
+		String replyId = request.getParameter("rid");
+		vo.setReplyId(Integer.parseInt(replyId));
 		
-		list = dao.replySelectList(Integer.parseInt(noticeId));
-		String json = objectMapper.writeValueAsString(list);
+		int n = dao.replyDelete(vo);
 		
-		response.setContentType("text/json; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(json);
-		
-		
+		if(n != 0) {
+			// json 코드를 넘겨준다 
+			// {"retCode" : "Success"}
+			response.getWriter().print("{\"retCode\" : \"Success\"}");
+		} else {
+			// {"retCode" : "Fail"}
+			response.getWriter().print("{\"retCode\" : \"Fail\"}");
+		}
 		
 		
 	}
