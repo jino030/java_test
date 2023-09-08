@@ -8,12 +8,19 @@
 		table {
 			border: 1px solid #ccc;
 			border-collapse: collapse;
+			margin: 10px auto;
 		}
 
 		th,
 		td {
 			border: 1px solid #ccc;
 			padding: 5px;
+		}
+
+		.center {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.pagination {
@@ -51,6 +58,10 @@
 </head>
 
 <body>
+	시도선택 : <select class="sidoList" name="" id="">
+		<!-- <option value="">opt1</option> 선택할때 마다 change 이벤트 발생.. -->
+	</select>
+	<hr>
 	<table>
 		<thead>
 			<tr>
@@ -82,16 +93,48 @@
 			.then(json => {
 				console.log(json);
 				console.log(`전체건수: ${json.totalCount}`);
+				let sidos = [];
 				centerList = json.data; //서버에서 가져온 데이터를 저장.
-				// json.data.forEach((center, idx) => {
-				// 	if (idx < 10) {
-				// 		let tr = makeTr(center);
-				// 		document.querySelector('#list').appendChild(tr);
-				// 	}
-				// })
 
-				showPageList(1);
+				for (let i = 0; i < centerList.length; i++) {
+					if (sidos.indexOf(centerList[i].sido) == -1) {
+						sidos.push(centerList[i].sido);
+					}
+				}
+				console.log(sidos);
+
+				makOpt(sidos);
+				showPageList(1, centerList);
 			})
+
+		// 시도 정보를 이용해서 option 생성.
+		function makOpt(sidos) {
+			sidos.forEach(prop => {
+				let opt = document.createElement('option');
+				opt.innerHTML = prop;
+				opt.setAttribute('value', prop);
+				document.querySelector('.sidoList').appendChild(opt);
+			})
+		}
+		// 시도 체인지 이벤트
+		let sidoSelect = document.querySelector('select.sidoList');
+		sidoSelect.addEventListener('change', function (e) {
+			console.log(this.value);
+
+			// centerList
+			document.querySelector('#list').innerHTML = '';
+			let newAry = [];
+			for (let i = 0; i < centerList.length; i++) {
+				if (this.value == centerList[i].sido) {
+					console.log(this.value + " == " + centerList[i].sido);
+
+					//let tr = makeTr(centerList[i]);
+					//document.querySelector('#list').appendChild(tr);
+					newAry.push(centerList[i]);
+				}
+			}
+			showPageList(1, newAry);
+		})
 
 		// 센터정보를 이용해서 tr 생성.
 		function makeTr(center) {
@@ -109,12 +152,35 @@
 				}
 				tr.appendChild(td);
 			})
+			// 삭제
+			let td = document.createElement('td');
+			let btn = document.createElement('button');
+			btn.innerText = '삭제';
+			td.appendChild(btn);
+			btn.addEventListener('click', function (e) {
+				e.target.parentElement.parentElement.remove();
+				//showPageList();
+				let list = document.querySelector('#list');
+				let lastChild = list.lastChild.firstChild.innerHTML;
+				console.log(list.lastChild);
+				console.log(lastChild);
+
+				// centerList를 돌면서 tr 생성..
+				for (let i = 0; i < centerList.length; i++) {
+					console.log(centerList[i].id);
+					if(centerList[i].id == lastChild){
+						let tr = makeTr(centerList[i+1]);
+						document.querySelector('#list').appendChild(tr);
+					}
+				}
+			})
+			tr.appendChild(td);
 			return tr;
 		}
 
 		// page 정보를 매개값으로 가지는 페이지, 목록 보여주는 함수.
-		function showPageList(page = 1) {
-			let totalCount = centerList.length;
+		function showPageList(page = 1, targetLsit = []) {
+			let totalCount = targetLsit.length;
 			//39/10 = Math.ceil(3.9) = (4) 
 			//1. 0-9
 			//2. 10-19
@@ -125,14 +191,14 @@
 			let start = (page - 1) * 10;
 			let end = page * 10;
 			end = end > totalCount ? totalCount : end;
-			for(let i=start; i<end; i++){
-				let tr = makeTr(centerList[i]);
+			for (let i = start; i < end; i++) {
+				let tr = makeTr(targetLsit[i]);
 				document.querySelector('#list').appendChild(tr);
 			}
 
 			// 페이지의 링크 생성.
 			document.querySelector('.pagination').innerHTML = '';
-			
+
 			let endPage = Math.ceil(totalCount / 10); // 35/10 =>4
 			endPage = Math.ceil(page / 10) * 10; // 3page => 10
 			let realEndPage = Math.ceil(totalCount / 10);
@@ -141,38 +207,38 @@
 			let next = endPage < Math.ceil(totalCount / 10); //29
 			let prev = startPage > 1;
 
-			if(prev) {
+			if (prev) {
 				let atag = document.createElement('a');
-				atag.addEventListener('click', function(e){
+				atag.addEventListener('click', function (e) {
 					e.preventDefault(); // 기본 링크의 기능을 찾아가겠습니다..?
-					showPageList(startPage-1);
+					showPageList(startPage - 1, targetList);
 				})
-				atag.setAttribute('href', startPage -1);
+				atag.setAttribute('href', startPage - 1);
 				atag.innerHTML = '&laquo;';
 				document.querySelector('.pagination').appendChild(atag);
 			}
 
 			for (let i = startPage; i <= endPage; i++) { // 페이지 정보 링크로 만들기..
 				let atag = document.createElement('a');
-				atag.addEventListener('click', function(e){
+				atag.addEventListener('click', function (e) {
 					e.preventDefault(); // 기본 링크의 기능을 찾아가겠습니다..?
-					showPageList(i);
+					showPageList(i, targetLsit);
 				})
-				if (page == i){
+				if (page == i) {
 					atag.setAttribute('class', 'active');
 				}
 				atag.setAttribute('href', i);
 				atag.innerText = i;
 				document.querySelector('.pagination').appendChild(atag);
 			}
-			
+
 			if (next) {
 				let atag = document.createElement('a');
-				atag.addEventListener('click', function(e){
+				atag.addEventListener('click', function (e) {
 					e.preventDefault(); // 기본 링크의 기능을 찾아가겠습니다..?
-					showPageList(endPage+1);
+					showPageList(endPage + 1, targetLsit);
 				})
-				atag.setAttribute('href', endPage+1);
+				atag.setAttribute('href', endPage + 1);
 				atag.innerHTML = '&raquo;';
 				document.querySelector('.pagination').appendChild(atag);
 			}

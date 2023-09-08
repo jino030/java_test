@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <style>
+        .outer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 500px;
+            height: 350px;
+            background: #272727;
+            margin: 10px 0;
+            padding: 20px;
+        }
+
+        .outer span {
+            display: inline-block;
+            width: 90px;
+            height: 30px;
+            line-height: 30px;
+            padding: 2px;
+            margin: 2px;
+            border: 1px solid #000;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <input class="userVal" type="text" onkeyup="fnEnterkey();">
+    <button id="addBtn">입력</button>
+    <button id="startBtn">게임시작</button>
+    <div class="outer">
+        <!-- <span>hello</span>
+        <span>hello</span>
+        <span>hello</span>
+        <span>hello</span> -->
+    </div>
+    <p>남은시간 : <span id="time">60</span>초</p>
+
+
+    <script>
+
+        let str = `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora soluta consectetur laborum ea unde sunt aspernatur ex harum libero officia veritatis est assumenda facere, dolore amet inventore iure ad. Commodi!`;
+        let wordAry = str.split(' ');
+        let addBtn = document.querySelector('#addBtn');
+        let startBtn = document.querySelector('#startBtn');
+
+        // 단어 배열 만들기
+        for (let prop of wordAry) {
+            let span = document.createElement('span');
+            span.innerText = prop;
+            span.setAttribute('val', prop);
+
+            document.querySelector('.outer').appendChild(span);
+        }
+
+        // 시작버튼 클릭 이벤트
+        startBtn.addEventListener('click', function (e) {
+            document.querySelector('.outer').style.cssText = `background: yellow;`;
+            startBtn.style.display = 'none';
+            gameStart();
+        })
+
+        function gameStart() {
+            let timer = setInterval(function () {
+                document.querySelector('#time').innerText--;
+                if (document.querySelector('#time').innerText == 0) {
+                    alert("TIME OVER!!"); // 시간종료
+                    startBtn.style.display = 'inline-block';
+                    document.querySelector('.outer').style.cssText = `background: #272727`;
+                    document.querySelector('#time').innerText = 60;
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        addBtn.onclick = test;
+        function fnEnterkey() {
+            if(window.event.keyCode == 13) {
+                test();
+            }
+        }
+
+        function test () {
+            let userVal = document.querySelector('.userVal').value;
+            for (let prop of wordAry) {
+                if (prop == userVal) {
+                    let target = document.querySelector(`span[val = "${prop}"]`);
+                    target.style.cssText = `color: #fff; background: red; font-weight: bold;`;
+
+                    let remove = setInterval(function () {
+                        document.querySelector(`span[val = "${prop}"]`).remove();
+                        clearInterval(remove);
+                    }, 1500);
+                    break;
+                }
+            }
+            document.querySelector('.userVal').value = '';
+        }
+
+    </script>
+</body>
+
+</html>
