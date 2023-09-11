@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>jqueryCss.html</title>
+	<style>
+		#show>ul>li:nth-child(1) {
+			color: red;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="show">
+		<ul>
+			<li>Apple</li>
+			<li>Banana</li>
+			<li>Cherry <span>추천</span></li>
+			<li></li>
+		</ul>
+	</div>
+	<input type="checkbox" name="hobby" value="reading" checked>
+	<input type="checkbox" name="hobby" value="eating">
+
+	<script>
+		$('#show>ul>li:nth-child(1)').css('background', 'yellow');
+		$('#show>ul>li:nth-child(2)').css('background', 'aqua');
+		$('li').on('click', function (e) {
+			console.log(this);
+			$(this).css('color', 'blue');
+		})
+
+		// eq, lt, gt 순번은 index 의 값이 0부터 .
+		$('li:eq(0)').css('border', '2px solid green');
+		$('li:lt(1)').css('fontSize', '28px');
+		$('li:contains(Banana)').css('fontSize', '30px');
+		$('li:has(span)').css('background', 'green');
+		$('li:not(:eq(1))').css('border', '3px dotted blue');
+		$('li:empty').text('No');
+		
+		console.log($('input:checked'));
+		
+		$('ul').prepend($('<li />').text('Melon')); // <li>Melon</li>
+		$('<li />').text('<b>Peach</b>').appendTo($('ul')); //
+		
+		$('li:contains(Banana)').after($('<li>Grape</li>'));
+		$('<li>Grape2</li>').insertAfter($('li:first'));
+		
+		$('div#show').wrap('<div class="row"></div>');
+		
+		let clone = $('li:first').clone();
+		console.log(clone);
+		$('ul').append(clone);
+		
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>jqueryMember.html</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+	<div>
+		<ul id="list">
+			<li>user1, Hong <button>삭제</button><button>복제</button></li>
+		</ul>
+	</div>
+
+	<script>
+		const members = [
+			{id: "user1", name: "Hong"},
+			{id: "user2", name: "Park"},
+			{id: "user3", name: "Hwang"},
+		]
+		// code...
+		$('#list').html('');
+		members.forEach(member => {
+			$('#list').append(
+				$('<li />').text(`${member.id}, ${member.name} `)
+				           .append($('<button>삭제</button>'))
+				           .append($('<button>복제</button>'))
+			);
+		});
+		
+		$('#list').on('click', 'button:contains(삭제)', function (e) {
+			$(e.currentTarget).parent().remove();
+		})
+		
+		$('#list').on('click', 'button:contains(복제)', function (e) {
+			let cloned = $(e.currentTarget).parent().clone();
+			$(e.currentTarget).parent().after(cloned);
+		})
+
+	</script>
+</body>
+
+</html>

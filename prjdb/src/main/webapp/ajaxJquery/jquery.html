@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ajaxJquery/jquery.html</title>
+	<script src="../js/jquery-3.7.1.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> -->
+	<script>
+		//document.addEventListener('DOMContentLoaded', function (e) {
+		$(document).ready(function () { // document 객체의 사용준비가 되면...
+			let ul = $('<ul />'); // document.createElement('ul')
+			ul.append($('<li />').text('사과').attr('id', 'first'));
+			ul.append($('<li id="second">바나나</li>'));
+			console.log(ul);
+			$('div#show').append(ul); // body 태그 파악 후 사용가능.
+
+			let dom = document.createElement('ul');
+			console.log(dom);
+		})
+
+	</script>
+</head>
+
+<body>
+	<div id="show"></div>
+</body>
+
+</html>
