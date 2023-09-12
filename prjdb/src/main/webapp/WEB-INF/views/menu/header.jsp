@@ -11,6 +11,7 @@
 <body>
 	<nav id="nav-wrap">
 		<ul>
+			<li><a href="productList.do">Gamsung</a></li>
 			<li><a href="home.do">Home</a></li>
 			<li><a href="#">Book</a></li>
 			<li><a href="noticeselectlist.do">Notice</a></li>
@@ -22,6 +23,7 @@
 				<li><a href="memberlist.do">Member</a></li>
 				<li><a href="#">MyPage</a></li>
 				<li><a href="memberlogout.do">Logout</a></li>
+				<li><a href="TodoList.do">MyTodo</a></li>
 				<li>${name}님 접속중</li>
 			</c:if>
 		</ul>

@@ -1,0 +1,49 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;900&display=swap');
+
+* {
+	font-family: 'Noto Serif KR', serif;
+}
+.main-banner {
+	position: relative;
+	
+}
+
+.image-box__background,
+.image-box__overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.image-box__background {
+  background: url(../img/main.jpg) center center no-repeat;
+  background-size: cover;
+
+  z-index: 1
+}
+
+.image-box__overlay {
+  background: rgba(0, 0, 0, 0.5);
+
+  z-index: 2;
+}
+
+.image-box__content {
+  position: relative;
+
+  z-index: 3;
+
+  /* Finally, style and place the content */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+	display: inline-block;
+	width: 200px;
+}
