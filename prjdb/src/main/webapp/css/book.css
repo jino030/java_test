@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#container {
+	width: 100%;
+	max-width: 1200px;
+	height: auto;
+	margin: 0 auto;
+}
+#book_form{
+	display: flex;
+	align-items: flex-end;
+	gap: 20px;
+	padding: 20px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+#input_wrap, .btn_wrap {
+	display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btn_wrap {
+	gap: 10px;
+}
+#input_wrap {
+	width: 90%;
+}
+#input_wrap label {
+	height: 45px;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 3px;
+    border-radius: 15px;
+    justify-content: space-evenly;
+}
+
+#input_wrap label span {
+	box-sizing: border-box;
+	display: inline-block;
+	width: 15%;
+	text-align: center;
+	padding: 10px;
+}
+
+#input_wrap label input {
+	width: 82%;
+	height: 75%;
+	padding: 5px;
+	border: none;
+	background-color: #f2f2f2;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.btn {
+	width: 100%;
+	padding: 8px 10px;
+	border: none;
+	color: #575eae;
+	border-radius: 5px;
+	cursor: pointer;
+	background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+	transition: all 0.2s;
+	font-weight: 700;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+.btn:hover {
+	color: #575eae;
+	background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}
+
+.table_wrap {
+	margin: 50px 0;
+}
+#book_list {
+	width: 100%;
+	border: 1px solid #e6e6e6;
+	border-collapse: collapse;
+}
+tr,td,th {
+	border: 1px solid #e6e6e6;
+}
+th {
+	background-color: #444c77;
+	color: #fff;
+	font-weight: 500;
+}
+td,th {
+	padding: 10px;
+}
