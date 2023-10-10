@@ -1,5 +1,5 @@
 /**
- * book 정보
+ * book 객체
  */
  
  class Book {
@@ -33,24 +33,12 @@
 			.catch(err => console.log(err));
 	}
 		
-		// 삭제 기능..
-		bookRemove(bookId, callback) {
-			fetch('ajaxbookdelete.do?bid=' + bookId)
-			.then(resolve => resolve.json())
-			.then(result => callback(result))
-			.catch(err => console.log(err));
-		}
-		
-		// 댓글 수정 기능
-		// bookModify(reply = { rid: 10, reply: "변경된 댓글" }, callback) {
-		// 	fetch('ajaxReplyModify.do', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/x-www-form-urlencoded',
-		// 		},
-		// 		body: 'rid=' + reply.rid + '&content=' + reply.reply})
-		// 		.then(resolve => resolve.json())
-		// 		.then(result => callback(result))
-		// 		.catch(console.log("ajaxReplyAdd.do 요청 중 에러발생"));
-		// }
+	// 삭제 기능..
+	bookRemove(bookId, callback) {
+		fetch('ajaxbookdelete.do?bid=' + bookId)
+		.then(resolve => resolve.json())
+		.then(result => callback(result))
+		.catch(err => console.log(err));
 	}
+		
+}

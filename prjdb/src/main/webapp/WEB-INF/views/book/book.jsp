@@ -11,7 +11,7 @@
 	<jsp:include page="../menu/header.jsp" />
 	
 	<div id="container">
-		<form action="ajaxbookadd.do" id="book_form">
+		<form id="book_form">
 			<div id="input_wrap">
 				<label><span>도서코드</span><input type="text" id="bookCode" name="bookCode"></label>
 				<label><span>도서명</span><input type="text" id="bookName" name="bookName"></label>
@@ -86,7 +86,6 @@
 			let bookPrice = document.querySelector('input[name=bookPrice]').value;
 
 			const b = {bCode: bookCode, bName: bookName, bAuthor: bookAuthor, bPublisher: bookPublisher, bPrice: bookPrice};
-			console.log(b);
 
 			bookObj.bookAdd(b, function(data) {
 				console.log(data);
@@ -110,11 +109,11 @@
 
 				if (data.retCode == 'Success') {
 					target.parentElement.parentElement.remove();
-					} else if (data.retCode == 'Fail') {
-						alert("처리중 에러.");
-					} else {
-						alert("잘못된 코드 반환.");
-					}
+				} else if (data.retCode == 'Fail') {
+					alert("처리중 에러.");
+				} else {
+					alert("잘못된 코드 반환.");
+				}
 			})
 		}
 
@@ -126,10 +125,8 @@
 			for(let c of checkboxs){
 				if(c.checked == true) {
 					let bookId = c.getAttribute('data-bid');
-					console.log(bookId);
 
 					bookObj.bookRemove(bookId, function(data){
-						console.log(data);
 
 						if (data.retCode == 'Success') {
 							c.parentElement.parentElement.remove();
@@ -147,8 +144,7 @@
 		// 전체체크
 		document.querySelector('#all').addEventListener('change', function(e){
 			let checkboxs = document.querySelectorAll('input[type=checkbox]');
-			console.log(e);
-			console.log(e.target.checked);
+			
 			if(e.target.checked == true) {
 				for(let c of checkboxs){
 					c.checked = true;
@@ -160,6 +156,7 @@
 			}
 		})
 
+		// 리스트에 추가 후 input 초기화 함수
 		function fieldInit() {
 			document.querySelector('input[name=bookCode]').value = '';
 			document.querySelector('input[name=bookName]').value = '';
@@ -172,41 +169,27 @@
 		function makeTr(book) {
 			let tr = document.createElement('tr');
 			let td = document.createElement('td');
-			let checkbox = document.createElement('input');
-			let delBtn = document.createElement('button');
-			checkbox.setAttribute('type', 'checkbox');
-			delBtn.setAttribute('class', 'del_btn btn');
-			delBtn.innerText = '삭제';
+			let checkbox = document.createElement('input'); //input 태그 생성
+			let delBtn = document.createElement('button'); //button 태그 생성
 			
 			// 체크박스 추가
+			checkbox.setAttribute('type', 'checkbox');
 			checkbox.setAttribute('data-bid', book.bookId);
 			checkbox.setAttribute('class', 'book_chk');
 			td.append(checkbox);
 			tr.append(td);
 			
 			// 도서코드, 도서명, 저자, 출판사, 금액
-			td = document.createElement('td');
-			td.innerText = book.bookCode;
-			tr.append(td);
-
-			td = document.createElement('td');
-			td.innerText = book.bookName;
-			tr.append(td);
-
-			td = document.createElement('td');
-			td.innerText = book.bookAuthor;
-			tr.append(td);
-
-			td = document.createElement('td');
-			td.innerText = book.bookPublisher;
-			tr.append(td);
-
-			td = document.createElement('td');
-			td.innerText = book.bookPrice;
-			tr.append(td);
+			for(let prop of fields) {
+				let td = document.createElement('td');
+				td.innerText = book[prop];
+				tr.append(td);
+			}
 			
 			// 삭제버튼 추가
 			td = document.createElement('td');
+			delBtn.setAttribute('class', 'del_btn btn');
+			delBtn.innerText = '삭제';
 			delBtn.setAttribute('onclick', 'del(' + book.bookId + ', this)')
 			td.append(delBtn);
 			tr.append(td);

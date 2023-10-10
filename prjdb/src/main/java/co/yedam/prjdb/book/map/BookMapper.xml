@@ -18,7 +18,7 @@
 		<selectKey keyProperty="bookId" resultType="int" order="BEFORE">
 			SELECT NVL(MAX(book_Id), 0) + 1 AS bookId FROM BOOK
 		</selectKey>
-		INSERT INTO BOOK
+		INSERT INTO BOOK (book_id, book_name, book_author, book_publisher, book_price, book_code)
 		VALUES (#{bookId}, #{bookName}, #{bookAuthor}, #{bookPublisher}, #{bookPrice}, #{bookCode})
 	</insert>
 	
