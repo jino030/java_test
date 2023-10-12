@@ -1,5 +1,5 @@
 // 비동기방식 fetch();
-// 비동기를 동기방식으로???? promise  객체??
+// 비동기를 동기방식으로???? promise  객체?? test
 
 async function asyncFunc() {
 	let memberAry = [];
