@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v01_instance02.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app01">
+    <p v-text="myText"></p>
+    <p v-html="myText"></p>
+    {{myText}}
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app01',
+      data: {
+        myText: '<h3>Hello, World</h3>'
+      }
+    })
+  </script>
+
+  <div id="app02">
+    <p>{{myNum * 2}}</p>
+    <p>{{myTxt + '를 배웁시다.'}}</p>
+    <p>{{myBool}}</p>
+    <p>{{myAry}}</p>
+    <p>{{myAry[0]}}</p>
+    <p>{{myObj.name + '은 ' + myObj.age + '살 입니다.'}}</p>
+    <p>{{myFnc}}</p>
+    <p>{{myFnc()}}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app02',
+      data: {
+        myNum: 24,
+        myTxt: 'Vue.js',
+        myBool: true,
+        myAry: ['이마크', '황인준', '이제노'],
+        myObj: {
+          name: '박지성',
+          age: 22
+        },
+        myFnc: function(){
+          return "내가만든 함수~"
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

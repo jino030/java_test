@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v06_board.html</title>
+  <link rel="stylesheet" href="style/board.css">
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 게시글 목록. -->
+    <div id="boardList" v-if="boardList">
+      <h3>게시글 목록</h3>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>no</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="board in boards">
+            <td @click="showBoard(board)">{{board.no}}</td>
+            <td @click="showBoard(board)">{{board.title}}</td>
+            <td @click="showBoard(board)">{{board.view}}</td>
+            <td><button @click="boardDel(board.no)">삭제</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button v-on:click="showWrite">글쓰기</button>
+    </div>
+
+    <!-- 게시글 작성 -->
+    <div id="boardWrite" v-if="boardWrite">
+      <h3>게시글 작성</h3>
+      <table id="list">
+        <tbody>
+          <tr>
+            <th>글제목</th>
+            <td><input type="text" style="width: 90%;" v-model="title"></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <textarea cols="30" rows="3" style="width: 98%;" v-model="content"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="showList">목록보기</button>
+      <button @click="saveBoard">저장</button>
+    </div>
+
+    <!-- 게시글 상세 -->
+    <div id="boardRead" v-if="boardRead">
+      <h3>게시글 상세</h3>
+      <table id="list">
+        <tbody>
+          <tr>
+            <th>글번호</th>
+            <td>{{board.no}}</td>
+            <th>조회수</th>
+            <td>{{board.view}}</td>
+          </tr>
+          <tr>
+            <th>글제목</th>
+            <td colspan="3">{{board.title}}</td>
+          </tr>
+          <tr>
+            <th>내용</th>
+            <td colspan="3">
+              <textarea cols="30" rows="3" style="width: 98%;" disabled>{{board.content}}</textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button @click="showList">목록보기</button>
+    </div>
+
+  </div>
+  <script>
+    let boardList = [
+      {no:1, title:'오늘은 금요일', content: '너무 좋아요~', view:1},
+      {no:2, title:'오늘의 각오', content: '집에가서 밤새놀자.', view:5},
+      {no:3, title:'뿡빵뿡빵', content: '재륜언니 바부', view:10},
+      {no:4, title:'우와 내가 좋아하는', content: '붕어빵이다.', view:2},
+    ]
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        boards: boardList,
+        title: '',
+        content: '',
+        boardList: true,
+        boardWrite: false,
+        boardRead: false,
+        board: {no:0,title:'',content:'',view:0}
+      },
+      methods: {
+        showWrite(){
+          this.boardWrite = true;
+          this.boardList = false;
+          this.boardRead = false;
+        },
+        showList(){
+          this.boardWrite = false;
+          this.boardList = true;
+          this.boardRead = false;
+        },
+        saveBoard(){
+          this.boards.push({no:this.boards.length+1, title: this.title, content: this.content, view:0});
+          this.showList();
+          this.title = '';
+          this.content = '';
+        },
+        showBoard(obj){
+          this.boardWrite = false;
+          this.boardList = false;
+          this.boardRead = true;
+
+          this.board.no = obj.no;
+          this.board.title = obj.title;
+          this.board.content = obj.content;
+          this.board.view = obj.view;
+        },
+        boardDel(bno){
+          this.boards.forEach((el, idx) => {
+            if(el.no == bno){
+              this.boards.splice(idx, 1);
+            }
+          });
+        }
+      },
+      computed: {
+
+      }
+    })
+  </script>
+</body>
+</html>

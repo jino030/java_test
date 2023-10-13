@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v01_instance05.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app01">
+    <div>
+      <lable>
+        <input type="checkbox" v-model="myhobbies" value="book">독서
+      </lable>
+      <lable>
+        <input type="checkbox" v-model="myhobbies" value="movie">영화보기
+      </lable>
+      <lable>
+        <input type="checkbox" v-model="myhobbies" value="writing">글쓰기
+      </lable>
+      <p>취미: {{myhobbies}}</p>
+    </div>
+    <div>
+      <lable>
+        <input type="radio" v-model="myData" value="book">독서
+      </lable>
+      <lable>
+        <input type="radio" v-model="myData" value="movie">영화보기
+      </lable>
+      <lable>
+        <input type="radio" v-model="myData" value="writing">글쓰기
+      </lable>
+      <p>취미: {{myData}}</p>
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: '#app01',
+      data: {
+        myhobbies: ["book", "movie", "writing"],
+        myData: "movie",
+      }
+    })
+  </script>
+
+  <div id="app02">
+    <select v-model="myColor">
+      <option value="" disabled>선택하세요</option>
+      <option value="red">red</option>
+      <option value="green">green</option>
+      <option value="orange">orange</option>
+    </select>
+    <p v-bind:style="{color: myColor}">선택한 색상은  {{myColor}}입니다.</p>
+
+    <label><input type="checkbox" v-model="myAgree">동의합니다.</label>
+    <button v-bind:disabled="!myAgree">송신</button>
+  </div>
+  <script>
+    new Vue({
+      el: '#app02',
+      data: {
+        myColor: '',
+        myAgree: true
+      }
+    })
+  </script>
+</body>
+
+</html>

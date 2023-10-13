@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v03_for.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <style>
+    .wrap {
+      background-color: rgb(222, 227, 231);
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+
+    .flex {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .flex ul {
+      border: 1px solid yellowgreen;
+      margin: 5px 5px;
+      padding: 10px;
+      font-size: 10px;
+    }
+
+    .flex ul li {
+      list-style: none;
+    }
+
+    table {
+      border: 1px solid #2e2e2e;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #2e2e2e;
+      padding: 10px;
+    }
+
+    th {
+      background-color: rgb(50, 76, 99);
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="wrap">
+    
+    <div class="flex">
+      <ul v-for="dan in 9">
+        <span>{{dan + '단'}}</span>
+        <li v-for="num in myNum">{{dan}} * {{num}} = {{dan*num}}</li>
+      </ul>
+    </div>
+    <hr>
+    <ul>
+      <h3>배열을 활용한 반복문</h3>
+      <li v-for="(item, i) in myArray">{{i+1}}번 {{item}}</li>
+    </ul>
+    <hr>
+    <ul>
+      <h3>객체배열인 경우</h3>
+      <li v-for="bread in objAry">{{bread.name}}: {{bread.price}}원</li>
+    </ul>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myNum: 9,
+        myArray: ['설악산', '한라산', '북한산', '백두산'],
+        objAry: [
+          { name: '슈크림빵', price: 1000 },
+          { name: '단팥빵', price: 2000 },
+          { name: '카스테라', price: 3000 },
+        ]
+      }
+    })
+  </script>
+
+  <div id="app02" class="wrap">
+    <h3>관심받고 있는 언어랭킹</h3>
+    <table>
+      <thead>
+        <tr>
+          <th v-for="title in titles">{{title}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in rankings">
+          <td v-for="data in row">{{data}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    new Vue({
+      el: '#app02',
+      data: {
+        titles: ['프로그래밍 언어', 2018, 2013, 2008, 2003, 1998],
+        rankings: [
+          ['Java', 1, 2, 1, 1, 16],
+          ['C', 2, 1, 2, 2, 1],
+          ['C++', 3, 4, 3, 3, 2],
+          ['Python', 4, 7, 6, 11, 23],
+          ['Javascript', 7, 10, 8, 7, 20]
+        ]
+      }
+    })
+  </script>
+
+  <div id="app03" class="wrap">
+    <ul>
+      <li v-for="item in ary">{{item}}</li>
+    </ul>
+    <button @click="addLast">맨뒤에 추가</button>
+    <button @click="addObj(2)">세번째에 추가</button>
+    <button @click="delObj(1)">두번째삭제</button>
+    <button @click="changeObj(0)">첫번째 변경</button>
+  </div>
+  <script>
+    new Vue({
+      el: '#app03',
+      data: {
+        ary: ['첫번째', '두번째', '세번째', '네번째'],
+        num: 0
+      },
+      methods: {
+        addLast: function () {
+          this.ary.push('[맨마지막 추가]');
+        },
+        addObj: function (idx) {
+          this.num++;
+          this.ary.splice(idx, 0, '[세번째 추가 ' + this.num + '번함]');
+        },
+        delObj: function (idx) {
+          this.ary.splice(idx, 1);
+        },
+        changeObj(idx) {
+          this.ary.splice(idx, 1, '[변경]');
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v05_computed_2.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="searchWords">
+    <ul>
+      <li v-for="d in findItems">{{d}}</li>
+    </ul>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        dataList: ['mark', 'renjun', 'jeno', 'haechan', 'jaemin', 'chenle', 'jisung'],
+        searchWords: ''
+      },
+      computed: {
+        findItems: function(){
+          let ary = [];
+          if(this.searchWords == '') {
+            ary = this.dataList;
+          } else {
+            for(idx in this.dataList){
+              if(this.dataList[idx].indexOf(this.searchWords) >= 0){
+                ary.push(this.dataList[idx]);
+              }
+            }
+          }
+          return ary;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v04_example1.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <button @click="countUp" v-bind:disabled="myBool_u">증가</button>
+    <button @click="countDown" v-bind:disabled="myBool_d">감소</button>
+    <p>{{myCount}}</p>
+    <input v-model="myVal">
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        myCount: 0,
+        myBool_u: false,
+        myBool_d: false,
+        myVal: 2
+      },
+      methods: {
+        countUp(){
+          this.myBool_d = false;
+          this.myCount += Number(this.myVal);
+          if(this.myCount >= 10) {
+            this.myBool_u = true;
+          }
+        },
+        countDown(){
+          this.myBool_u = false;
+          this.myCount -= Number(this.myVal);
+          if(this.myCount <= 0) {
+            this.myBool_d = true;
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

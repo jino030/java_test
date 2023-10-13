@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v01_instance04.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <!-- v-model : 사용자의 입력값을 받아서 화면에 바로바로 처리하기 위한 지시자(양방향 처리) -->
+  <div id="app01">
+    <p>{{myName}}</p>
+    <input type="text" v-model="myName" placeholer="이름을 입력하세요." name="" id="">
+    <hr>
+    <p>문자수 : {{myTxt.length}}</p>
+    <p style="white-space: pre-line">{{myTxt}}</p>
+    <textarea v-model="myTxt" name="" id="" cols="30" rows="10"></textarea>
+    <hr>
+    <label>
+      <input type="checkbox" v-model="myCheck" true-value="o" false-value="x">
+      체크박스의 상태값은 {{myCheck}}
+    </label>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app01',
+      data: {
+        myName: '홍길동',
+        myTxt: '',
+        myCheck: 'x'
+      }
+    })
+  </script>
+
+</body>
+</html>
