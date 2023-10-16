@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component03.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <script src="./v08_data.js"></script>
+  <style>
+    #list {
+      width: 400px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    #list td,
+    #list th {
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    #list>thead>tr {
+      color: yellow;
+      background-color: purple;
+    }
+  </style>
+</head>
+
+<body>
+  <template id="contactTemplate">
+    <div>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>주소</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="contact in contacts">
+            <td>{{contact.no}}</td>
+            <td>{{contact.name}}</td>
+            <td>{{contact.tel}}</td>
+            <td>{{contact.address}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+  <script>
+    Vue.component('contact-list', {
+      template: '#contactTemplate',
+      props: ['contacts'] //root 컴포넌트의 데이터를 받아올때..
+    })
+  </script>
+
+
+  <div id="app">
+    <h3>예방 접종</h3>
+    <h4>1차 예방</h4>
+    <contact-list v-bind:contacts="list1"></contact-list>
+    <h4>2차 예방</h4>
+    <contact-list v-bind:contacts="list2"></contact-list>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        list1: list1,
+        list2
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v07_component01.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <h3>template 속성 활용..</h3>
+  <div id="app">
+    <hello-component message="nice, world"></hello-component>
+    <hello-component message="nice, friend"></hello-component>
+    <hello-component message="nice, you"></hello-component>
+  </div>
+
+  <script>
+    //매개값 : 화면상에서 컴포넌트에 보여져야할 태그, 화면에 보여주기 위한 속성??????
+    Vue.component('hello-component', {
+      template: '<div>Hello, {{message}}</div>',
+      props: ['message']
+    })
+
+    let vm = new Vue({
+      el: '#app',
+    })
+
+    console.log(vm.$children[0].message = '좋은 세상');
+  </script>
+</body>
+</html>

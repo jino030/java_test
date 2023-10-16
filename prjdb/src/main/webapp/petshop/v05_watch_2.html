@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v05_watch_2.html</title>
+  <link rel="stylesheet" href="style/board.css">
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <!-- https://sample.bmaster.kro.kr/contacts_long/search/fa -->
+  <div id="app01">
+    <p>
+      <input type="text" v-model="name" placeholder="2글자 이상을 입력하세요.">
+    </p>
+    <table id="list">
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>name</th>
+          <th>tel</th>
+          <th>address</th>
+        </tr>
+      </thead>
+      <tbody id="contacts">
+        <tr v-for="contact in contacts">
+          <td>{{contact.no}}</td>
+          <td>{{contact.name}}</td>
+          <td>{{contact.tel}}</td>
+          <td>{{contact.address}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p v-show="isProcessing">조회중..</p>
+  </div>
+  <script>
+    new Vue({
+      el: '#app01',
+      data: {
+        name: '',
+        contacts: [],
+        isProcessing: false
+      },
+      methods: {
+        fetchContacts() {
+          //배열의 값을 변경, 조회중구문을 보여줬다가 처리가 완료되면 없애주기.
+          this.contacts = [];
+          this.isProcessing = true;
+          let url = 'https://sample.bmaster.kro.kr/contacts_long/search/' + this.name;
+          fetch(url)
+            .then(resolve => resolve.json())
+            .then(result => {
+              this.contacts = result;
+              this.isProcessing = false;
+            })
+            .catch(err => {
+              console.log('parsing.fail', err);
+              this.contacts = [];
+              this.isProcessing = false;
+            })
+        }
+      },
+      watch: {
+        name: function (afterVal) {
+          console.log(afterVal);
+          if (afterVal.length >= 2) {
+            this.fetchContacts();
+          } else {
+            this.contacts = [];
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

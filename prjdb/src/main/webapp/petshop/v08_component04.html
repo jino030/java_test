@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component04.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <!-- child template -->
+  <template id="child-template">
+    <div>
+      <button v-on:click="clickEvent" v-bind:data-lang="buttonInfo.value">{{buttonInfo.text}}</button>
+    </div>
+  </template>
+
+  <!-- child component -->
+  <script>
+    Vue.component('child-comp', {
+      template: '#child-template',
+      methods: {
+        clickEvent(e){
+          console.log(this);
+          this.$emit('timeclick', e.target.innerText, e.target.dataset.lang); // 상위컴포넌트에 이벤트 발신
+        }
+      },
+      props: ['buttonInfo'] // 'button-info' => buttonInfo
+    })
+  </script>
+
+  <!-- parent template -->
+  <template id="parent-template">
+    <div>
+      <child-comp v-for="btn in buttons" v-bind:button-info="btn" v-on:timeclick="timeclickEvent"></child-comp>
+      <hr>
+      <div>{{msg}}</div>
+    </div>
+  </template>
+
+  <!-- parent component -->
+  <script>
+    Vue.component('parent-comp', {
+      template: '#parent-template',
+      props: ['buttons'],
+      data: function(){
+        return {
+          msg: ''
+        }
+      },
+      methods: {
+        timeclickEvent(k, v){
+          console.log('timeclickEvent');
+          this.msg = k + '는 ' + v + '입니다.';
+        }
+      }
+    })
+  </script>
+
+  <!-- Root Component(template) -->
+  <div id="app">
+    <parent-comp v-bind:buttons="buttonlist"></parent-comp>
+  </div>
+
+  <script>
+    // Root Component
+    new Vue({
+      el: '#app',
+      data: {
+        buttonlist: [
+          {text: 'Hello', value: '영어'},
+          {text: '신짜오', value: '베트남어'},
+          {text: '니하오', value: '중국어'},
+        ]
+      }
+    })
+  </script>
+</body>
+</html>

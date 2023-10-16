@@ -66,17 +66,18 @@
           </tr>
           <tr>
             <th>글제목</th>
-            <td colspan="3">{{board.title}}</td>
+            <td colspan="3"><input type="text" style="width: 90%;" v-model="title" v-bind:disabled="disable"></td>
           </tr>
           <tr>
             <th>내용</th>
             <td colspan="3">
-              <textarea cols="30" rows="3" style="width: 98%;" disabled>{{board.content}}</textarea>
+              <textarea cols="30" rows="3" style="width: 98%;" v-bind:disabled="disable">{{board.content}}</textarea>
             </td>
           </tr>
         </tbody>
       </table>
       <button @click="showList">목록보기</button>
+      <button @click="editBoard(board)">수정</button>
     </div>
 
   </div>
@@ -96,7 +97,8 @@
         boardList: true,
         boardWrite: false,
         boardRead: false,
-        board: {no:0,title:'',content:'',view:0}
+        board: {no:0,title:'',content:'',view:0},
+        disable : false
       },
       methods: {
         showWrite(){
@@ -108,9 +110,14 @@
           this.boardWrite = false;
           this.boardList = true;
           this.boardRead = false;
+          this.title = '';
         },
         saveBoard(){
-          this.boards.push({no:this.boards.length+1, title: this.title, content: this.content, view:0});
+          let no = 1;
+          let pos = this.boards.length - 1;
+          no = this.boards[pos].no;
+          no++;
+          this.boards.push({no:no, title: this.title, content: this.content, view:0});
           this.showList();
           this.title = '';
           this.content = '';
@@ -119,11 +126,11 @@
           this.boardWrite = false;
           this.boardList = false;
           this.boardRead = true;
+          this.disable = true;
 
-          this.board.no = obj.no;
-          this.board.title = obj.title;
-          this.board.content = obj.content;
-          this.board.view = obj.view;
+          obj.view++;
+          this.title = obj.title;
+          this.board = obj;
         },
         boardDel(bno){
           this.boards.forEach((el, idx) => {
@@ -131,6 +138,11 @@
               this.boards.splice(idx, 1);
             }
           });
+        },
+        editBoard(obj){
+          this.disable = false;
+
+          console.log(obj);
         }
       },
       computed: {

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>v05_computed_2.html</title>
   <script src="https://unpkg.com/vue@2"></script>
 </head>
+
 <body>
   <div id="app">
+    <!-- search-component -->
     <input v-model="searchWords">
+    <!-- list-component -->
     <ul>
       <li v-for="d in findItems">{{d}}</li>
     </ul>
@@ -21,21 +25,20 @@
         searchWords: ''
       },
       computed: {
-        findItems: function(){
-          let ary = [];
-          if(this.searchWords == '') {
-            ary = this.dataList;
+        findItems: function () {
+          let resultAry = []; //반환할 배열을 담은 함수
+          if (this.searchWords) { //값이 있으면(true)
+            resultAry = this.dataList.filter(item => { //filter
+              return item.indexOf(this.searchWords) > -1; //indexOf 찾는값이 있음 1반환 없음 -1반환
+            });
           } else {
-            for(idx in this.dataList){
-              if(this.dataList[idx].indexOf(this.searchWords) >= 0){
-                ary.push(this.dataList[idx]);
-              }
-            }
+            resultAry = this.dataList; //전체목록을 배열에 넣음
           }
-          return ary;
+          return resultAry;
         }
       }
     })
   </script>
 </body>
+
 </html>

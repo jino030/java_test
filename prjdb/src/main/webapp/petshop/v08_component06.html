@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component06.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+
+  <!-- list-component -->
+  <template id="listTemplate">
+    <div>
+      <ul>
+        <li v-for="d in datas">{{d}}</li>
+      </ul>
+    </div>
+  </template>
+  <script>
+    Vue.component('list-component', {
+      template: '#listTemplate',
+      props: ['datas']
+    })
+  </script>
+
+  <!-- search-component -->
+  <template id="searchTemplate">
+    <div>
+      <input type="text" v-model.trim="words" v-on:keyup.enter="keyupEvent">
+    </div>
+  </template>
+  <script>
+    Vue.component('search-component', {
+      template: '#searchTemplate',
+      data: function () {
+        return {
+          words: ''
+        }
+      },
+      methods: {
+        keyupEvent() {
+          this.$emit('search', this.words);
+        }
+      }
+    })
+  </script>
+
+
+  <!-- search-list-component -->
+  <template id="searchlistTemplate">
+    <div>
+      <search-component v-on:search="searchEvent"></search-component>
+      <list-component v-bind:datas="dataList"></list-component>
+    </div>
+  </template>
+  <script>
+    Vue.component('search-list-component', {
+      template: '#searchlistTemplate',
+      data: function () {
+        return {
+          dataList: ['mark', 'renjun', 'jeno', 'haechan', 'jaemin', 'chenle', 'jisung'],
+          originList: ['mark', 'renjun', 'jeno', 'haechan', 'jaemin', 'chenle', 'jisung']
+        }
+      },
+      methods: {
+        searchEvent(words) {
+          if(words) {
+            this.dataList = this.originList.filter(item => { //filter
+              return item.indexOf(words) > -1; //indexOf 찾는값이 있음 1반환 없음 -1반환
+            });
+          } else {
+            this.dataList = this.originList;
+          }
+        }
+      }
+    })
+  </script>
+
+  <!-- root component -->
+  <div id="app">
+    <search-list-component></search-list-component>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component02.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <template id="listTemp">
+    <li v-bind>{{myMessage}}, {{myCount}}</li>
+  </template>
+  <script>
+    Vue.component('list-component', {
+      template: '#listTemp',
+      //props : ['myMessage', 'myCount']
+      props: {
+        myMessage: {
+          type: String,
+          default: '안녕'
+        },
+        myCount: {
+          type: Number, // 문자열 이외의 타입을 받고 싶으면 사용시 v-bind와 함께 써야함..
+          required: true
+        },
+        countries: {
+          type: Array,
+          default: ['대한민국']
+        }
+      }
+    })
+  </script>
+
+  <div id="app">
+    <ul>
+      <list-component my-message="Hello" v-bind:my-count="100" v-bind:countries="['미국', '영국', '호주']"></list-component>
+      <list-component my-message="씬짜오" v-bind:my-count="150" v-bind:countries="['베트남']"></list-component>
+      <list-component my-message="니하오" v-bind:my-count="200" v-bind:countries="['중국', '타이완']"></list-component>
+      <list-component v-bind:my-count="300"></list-component>
+    </ul>
+  </div>
+  <script>
+    new Vue({
+      el: '#app'
+    })
+  </script>
+
+</body>
+
+</html>

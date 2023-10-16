@@ -2,7 +2,6 @@
 App = {
 	adoptedAry: [], //adopted.json의 정보
 	init: function () {
-		
 		// pets.json 파일의 정보를 읽어서 애완견의 정보를 활용해서 페이지 생성.
 		$.getJSON('../template/json/pets.json', (data) => {
 			for(let d of data){
@@ -58,7 +57,6 @@ App = {
 	markAdopted: function (e) {
 		// 얘는 사용자가 클릭하는 시점에 실행됨.. 비동기방식 처리 다되고 나서 실행된다..?
 		// 입양처리. adoptedAry에 추가.
-		let cnt = 0;
 		let id = parseInt($(e.target).attr('data-id'));
 		this.adoptedAry.push(id);
 		console.log(this.adoptedAry);

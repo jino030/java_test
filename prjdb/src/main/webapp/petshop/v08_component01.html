@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component01.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+
+  <template id="timeTemplate">
+    <div>
+      <p>현재시간이 궁금한가요..</p>
+      <span>현재시간 {{currentTime}}</span>
+      <button v-on:click="timeClick">클릭</button>
+    </div>
+  </template>
+  <script>
+    Date.prototype.timeFormat = function () {
+      //yyyy-MM-dd HH:mm:ss
+      let yyyy = this.getFullYear();
+      let mm = this.getMonth() + 1;
+      let dd = this.getDate();
+      let hh = this.getHours();
+      let mi = this.getMinutes();
+      let ss = '0' + this.getSeconds();
+      return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + mi + ':' + ss.slice(-2);
+    }
+
+    // 전역 component
+    Vue.component('time-component', {
+      template: '#timeTemplate',
+      data: function () {
+        return {
+          currentTime: (new Date()).timeFormat() // new Date()
+        }
+      },
+      methods: {
+        timeClick() {
+          this.currentTime = (new Date()).timeFormat();
+        }
+      }
+    })
+  </script>
+
+  <div id="app">
+    <time-component></time-component>
+    <time-component></time-component>
+    <my-component></my-component>
+  </div>
+  <hr>
+  <script>
+    new Vue({
+      el: '#app',
+      components: { // 지역 component
+        'my-component' : {
+          template: '<div>Hello, World</div>'
+        }
+      }
+    })
+  </script>
+
+  <div id="other">
+    <time-component></time-component>
+    <my-component></my-component>
+  </div>
+  <hr>
+  <script>
+    new Vue({
+      el: '#other',
+      components: { // 지역 component
+        'my-component' : {
+          template: '<div>Nice, World</div>'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
