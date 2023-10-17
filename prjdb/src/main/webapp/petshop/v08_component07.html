@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v08_component05.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <style>
+    #list {
+      width: 400px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+
+    #list td,
+    #list th {
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    #list>thead>tr {
+      color: yellow;
+      background-color: purple;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <!-- contactlist-component -->
+  <template id="contactlistTemplate">
+    
+  </template>
+  <script>
+    const contactlistComponent = {
+      template: `
+      <div>
+        <table id="list">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>이름</th>
+              <th>전화번호</th>
+              <th>주소</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="contact in contacts">
+              <td>{{contact.no}}</td>
+              <td>{{contact.name}}</td>
+              <td>{{contact.tel}}</td>
+              <td>{{contact.address}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      `,
+      props: ['contacts']
+    }
+  </script>
+
+  <!-- search-component -->
+  <template id="search-component">
+    
+  </template>
+  <script>
+    const searchComponent = {
+      template: `
+      <div>
+        <p>이름: <input type="text" v-model.trim="name" v-on:keyup.enter="keyupEvent" v-bind:placeholder="placeholder"></p>
+      </div>
+      `,
+      props: ['placeholder'],
+      data: function() {
+        return {
+          name: ''
+        }
+      },
+      methods: {
+        keyupEvent(e) {
+          if(this.name.length >= 2) {
+            this.$emit('search', this.name);
+          } else {
+            this.$emit('search', '');
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- serach-contact-component -->
+  <template id="searchContactComponent">
+    
+  </template>
+  <script>
+    const searchContactComponent = {
+      template: `
+      <div>
+        <search-component placeholder="2글자 이상.." v-on:search="searchEvent"></search-component>
+        <contactlist-component v-bind:contacts="contactlist"></contactlist-component>
+        <div v-show="isProcessing">조회중...</div>
+      </div>
+      `,
+      data: function () {
+        return {
+          isProcessing: false,
+          contactlist: []
+        }
+      },
+      components: {
+        'search-component' : searchComponent,
+        'contactlist-component' : contactlistComponent
+      },
+      methods: {
+        searchEvent(name) {
+          if(name == '') {
+            this.contactlist = [];
+          } else {
+            this.fetchContacts(name);
+          }
+        },
+        fetchContacts(name) {
+          //배열의 값을 변경, 조회중구문을 보여줬다가 처리가 완료되면 없애주기.
+          this.contactlist = [];
+          this.isProcessing = true;
+          let url = 'https://sample.bmaster.kro.kr/contacts_long/search/' + name;
+          fetch(url)
+            .then(resolve => resolve.json())
+            .then(result => {
+              this.contactlist = result;
+              this.isProcessing = false;
+            })
+            .catch(err => {
+              console.log('parsing.fail', err);
+              this.contactlist = [];
+              this.isProcessing = false;
+            })
+        }
+      }
+    }
+  </script>
+
+  <!-- root component -->
+  <div id="app">
+    <search-contact-component></search-contact-component>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      components: {
+        'search-contact-component' : searchContactComponent
+      }
+    })
+  </script>
+</body>
+
+</html>
